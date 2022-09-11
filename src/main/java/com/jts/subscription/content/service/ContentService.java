@@ -27,7 +27,7 @@ public class ContentService {
 
     public Content updateContent(Content content) {
         UUID id = content.getId();
-        Content tempContent = contentRepository.findById(id).get();
+        Content tempContent = contentRepository.findById(id).orElseThrow();
         tempContent.setContent(content.getContent());
         return contentRepository.save(tempContent);
     }
