@@ -1,5 +1,6 @@
 package com.jts.subscription.content.controller;
 
+import com.jts.subscription.content.client.ContentClient;
 import com.jts.subscription.content.data.entity.Content;
 import com.jts.subscription.content.service.ContentService;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import java.util.UUID;
 public class ContentController {
 
     private final ContentService contentService;
+    private final ContentClient contentClient;
 
     @GetMapping("/{id}")
     public Content getContent(@PathVariable UUID id) {
@@ -32,5 +34,10 @@ public class ContentController {
     @PutMapping
     public Content updateContent(@RequestBody Content content) {
         return contentService.updateContent(content);
+    }
+
+    @PostMapping("/jopa/{text}")
+    public void jopa(@PathVariable String text){
+        contentClient.sendMessage(text);
     }
 }

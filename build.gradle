@@ -20,11 +20,13 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.6.1'
 	implementation group: 'org.mapstruct', name: 'mapstruct', version: '1.4.2.Final'
 	annotationProcessor("org.mapstruct:mapstruct-processor:1.4.2.Final")
+
 	implementation 'org.projectlombok:lombok:1.18.18'
-	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:3.0.4'
+
 	implementation 'org.springframework.boot:spring-boot-starter-actuator:2.6.1'
 	implementation 'org.springframework.cloud:spring-cloud-starter-config:3.0.5'
 	implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap:3.0.4'
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:3.1.4'
 
 	implementation group: 'org.liquibase', name: 'liquibase-core', version: '4.6.1'
 	liquibaseRuntime 'info.picocli:picocli:4.6.2'
