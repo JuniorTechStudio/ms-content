@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @FeignClient(name = "botyara", url = "http://localhost:8080/JTSBot")
-public interface ContentClient {
+public interface TelegramAdapterClient {
    @RequestMapping(value = "/{text}", method = RequestMethod.POST)
    void sendMessage(@PathVariable String text);
 }

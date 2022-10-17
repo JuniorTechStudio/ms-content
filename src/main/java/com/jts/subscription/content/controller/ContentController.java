@@ -1,6 +1,6 @@
 package com.jts.subscription.content.controller;
 
-import com.jts.subscription.content.client.ContentClient;
+import com.jts.subscription.content.client.TelegramAdapterClient;
 import com.jts.subscription.content.data.entity.Content;
 import com.jts.subscription.content.service.ContentService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,7 @@ import java.util.UUID;
 public class ContentController {
 
     private final ContentService contentService;
-    private final ContentClient contentClient;
+    private final TelegramAdapterClient telegramAdapterClient;
 
     @GetMapping("/{id}")
     public Content getContent(@PathVariable UUID id) {
@@ -36,8 +36,8 @@ public class ContentController {
         return contentService.updateContent(content);
     }
 
-    @PostMapping("/jopa/{text}")
-    public void jopa(@PathVariable String text){
-        contentClient.sendMessage(text);
+    @PostMapping("/send/{text}")
+    public void sendMessege(@PathVariable String text){
+        telegramAdapterClient.sendMessage(text);
     }
 }
