@@ -28,4 +28,10 @@ public class Content {
 
     @Column(name = "content")
     private String content;
+
+    @Column(name = "subscription_id")
+    private UUID subscriptionId;
+
+    @Column(name = "order_number")
+    private Integer order;
 }
