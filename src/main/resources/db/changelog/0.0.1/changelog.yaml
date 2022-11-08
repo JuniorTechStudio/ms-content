@@ -1,3 +1,5 @@
 databaseChangeLog:
   - include:
       file: db/changelog/0.0.1/changes/0.0.1-init.sql
+  - include:
+      file: db/changelog/0.0.1/changes/0.0.2-add_columns_for_content_table.sql
