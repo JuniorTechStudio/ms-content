@@ -11,8 +11,8 @@ import com.jts.subscription.content.repository.ContentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,19 +22,18 @@ public class SubscriptionService {
     private final TelegramAdapterClient telegramAdapterClient;
 
     public List<PreparedSubscriptionContent> prepareContentForSubscription(PrepareAndSendContentRequest prepareAndSendContentRequest) {
-        var preparedSubscriptionContentList = new ArrayList<PreparedSubscriptionContent>();
-        prepareAndSendContentRequest.getSubscriptionUserInfoDTOList().forEach(
-                subscriptionUserInfoDTO -> {
-                    Content content = findContentBySubscriptionTitleAndOrder(
-                            subscriptionUserInfoDTO.getSubscriptionTitle(),
-                            subscriptionUserInfoDTO.getOrder()
-                    );
-                    String telegramId = subscriptionUserInfoDTO.getTelegramId();
-                    var preparedSubscriptionContent = new PreparedSubscriptionContent(telegramId, content.getContent());
-                    preparedSubscriptionContentList.add(preparedSubscriptionContent);
-                }
-        );
-        return preparedSubscriptionContentList;
+        return prepareAndSendContentRequest.getSubscriptionUserInfoDTOList()
+                .stream()
+                .map(
+                        subscriptionUserInfoDTO -> {
+                            Content content = findContentBySubscriptionTitleAndOrder(
+                                    subscriptionUserInfoDTO.getSubscriptionTitle(),
+                                    subscriptionUserInfoDTO.getOrder()
+                            );
+                            return new PreparedSubscriptionContent(subscriptionUserInfoDTO.getTelegramId(), content.getContent());
+                        }
+                )
+                .collect(Collectors.toList());
     }
 
     public void sendPreparedContent(List<PreparedSubscriptionContent> preparedSubscriptionContentList) {
