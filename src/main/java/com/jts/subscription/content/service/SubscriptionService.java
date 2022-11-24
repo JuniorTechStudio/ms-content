@@ -10,11 +10,9 @@ import com.jts.subscription.content.repository.ContentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -27,9 +25,9 @@ public class SubscriptionService {
         List<PreparedSubscriptionContent> preparedSubscriptionContentList = new ArrayList<>();
         List<SubscriptionUserInfoDTO> subscriptionUserInfoDTOList = prepareAndSendContentRequest.getSubscriptionUserInfoDTOList();
         for (SubscriptionUserInfoDTO subscriptionUserInfoDTO : subscriptionUserInfoDTOList) {
-            UUID subscriptionId = subscriptionUserInfoDTO.getSubscriptionId();
+            String subscriptionTitle = subscriptionUserInfoDTO.getSubscriptionTitle();
             Integer order = subscriptionUserInfoDTO.getOrder();
-            Optional<Content> contentOptional = contentRepository.findBySubscriptionIdAndOrder(subscriptionId, order);
+            Optional<Content> contentOptional = contentRepository.findContentBySubscriptionTitleAndOrder(subscriptionTitle, order);
             Content content = contentOptional.orElseThrow();
             String telegramId = subscriptionUserInfoDTO.getTelegramId();
             PreparedSubscriptionContent preparedSubscriptionContent = new PreparedSubscriptionContent(telegramId, content.getContent());

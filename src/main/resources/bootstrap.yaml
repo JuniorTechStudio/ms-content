@@ -1,6 +1,0 @@
-spring:
-  application:
-    name: ms-content
-  cloud:
-    config:
-      uri: http://192.168.88.13:8001

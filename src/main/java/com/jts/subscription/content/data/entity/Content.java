@@ -29,8 +29,8 @@ public class Content {
     @Column(name = "content")
     private String content;
 
-    @Column(name = "subscription_id")
-    private UUID subscriptionId;
+    @Column(name = "subscription_title")
+    private String subscriptionTitle;
 
     @Column(name = "order_number")
     private Integer order;

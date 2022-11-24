@@ -16,9 +16,8 @@ public class ContentController {
     private final ContentService contentService;
     private final TelegramAdapterClient telegramAdapterClient;
 
-    @GetMapping("/{id}")
-    public Content getContent(@PathVariable UUID id) {
-        return contentService.getContent(id);
+    @GetMapping("/{text}")
+    public void getContent(@PathVariable String text) {
     }
 
     @PostMapping

@@ -2,6 +2,7 @@ package com.jts.subscription.content.data.dto;
 
 import lombok.*;
 
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
