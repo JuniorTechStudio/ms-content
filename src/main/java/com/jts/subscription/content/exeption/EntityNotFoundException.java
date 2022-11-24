@@ -1,0 +1,12 @@
+package com.jts.subscription.content.exeption;
+
+public class EntityNotFoundException extends RuntimeException {
+
+    private ErrorCode errorCode;
+
+    public EntityNotFoundException(String message, ErrorCode errorCode) {
+        super(message);
+        this.errorCode = errorCode;
+    }
+
+}

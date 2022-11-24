@@ -3,16 +3,16 @@ package com.jts.subscription.content.service;
 import com.jts.subscription.content.client.TelegramAdapterClient;
 import com.jts.subscription.content.data.dto.PrepareAndSendContentRequest;
 import com.jts.subscription.content.data.dto.PreparedSubscriptionContent;
-import com.jts.subscription.content.data.dto.SubscriptionUserInfoDTO;
 import com.jts.subscription.content.data.dto.TelegramSendContentRequest;
 import com.jts.subscription.content.data.entity.Content;
+import com.jts.subscription.content.exeption.EntityNotFoundException;
+import com.jts.subscription.content.exeption.ErrorCode;
 import com.jts.subscription.content.repository.ContentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,17 +22,18 @@ public class SubscriptionService {
     private final TelegramAdapterClient telegramAdapterClient;
 
     public List<PreparedSubscriptionContent> prepareContentForSubscription(PrepareAndSendContentRequest prepareAndSendContentRequest) {
-        List<PreparedSubscriptionContent> preparedSubscriptionContentList = new ArrayList<>();
-        List<SubscriptionUserInfoDTO> subscriptionUserInfoDTOList = prepareAndSendContentRequest.getSubscriptionUserInfoDTOList();
-        for (SubscriptionUserInfoDTO subscriptionUserInfoDTO : subscriptionUserInfoDTOList) {
-            String subscriptionTitle = subscriptionUserInfoDTO.getSubscriptionTitle();
-            Integer order = subscriptionUserInfoDTO.getOrder();
-            Optional<Content> contentOptional = contentRepository.findContentBySubscriptionTitleAndOrder(subscriptionTitle, order);
-            Content content = contentOptional.orElseThrow();
-            String telegramId = subscriptionUserInfoDTO.getTelegramId();
-            PreparedSubscriptionContent preparedSubscriptionContent = new PreparedSubscriptionContent(telegramId, content.getContent());
-            preparedSubscriptionContentList.add(preparedSubscriptionContent);
-        }
+        var preparedSubscriptionContentList = new ArrayList<PreparedSubscriptionContent>();
+        prepareAndSendContentRequest.getSubscriptionUserInfoDTOList().forEach(
+                subscriptionUserInfoDTO -> {
+                    Content content = findContentBySubscriptionTitleAndOrder(
+                            subscriptionUserInfoDTO.getSubscriptionTitle(),
+                            subscriptionUserInfoDTO.getOrder()
+                    );
+                    String telegramId = subscriptionUserInfoDTO.getTelegramId();
+                    var preparedSubscriptionContent = new PreparedSubscriptionContent(telegramId, content.getContent());
+                    preparedSubscriptionContentList.add(preparedSubscriptionContent);
+                }
+        );
         return preparedSubscriptionContentList;
     }
 
@@ -42,6 +43,16 @@ public class SubscriptionService {
                 .preparedSubscriptionContentList(preparedSubscriptionContentList)
                 .build();
         telegramAdapterClient.sendPreparedContent(telegramSendContentRequest);
+    }
+
+    private Content findContentBySubscriptionTitleAndOrder(String subscriptionTitle, Integer order) {
+        return contentRepository.findContentBySubscriptionTitleAndOrder(subscriptionTitle, order)
+                .orElseThrow(
+                        () -> new EntityNotFoundException(
+                                String.format("Content with subscriptionTitle: %s and order: %d not found", subscriptionTitle, order),
+                                ErrorCode.SUBSCRIPTION_NOT_FOUND
+                        )
+                );
     }
 
 }

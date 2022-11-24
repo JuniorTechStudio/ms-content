@@ -1,9 +1,12 @@
 package com.jts.subscription.content.service;
 
 import com.jts.subscription.content.data.entity.Content;
+import com.jts.subscription.content.exeption.EntityNotFoundException;
+import com.jts.subscription.content.exeption.ErrorCode;
 import com.jts.subscription.content.repository.ContentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -25,11 +28,21 @@ public class ContentService {
         contentRepository.deleteById(id);
     }
 
+    @Transactional
     public Content updateContent(Content content) {
-        UUID id = content.getId();
-        Content tempContent = contentRepository.findById(id).orElseThrow();
+        Content tempContent = findContentById(content.getId());
         tempContent.setContent(content.getContent());
-        return contentRepository.save(tempContent);
+        return tempContent;
+    }
+
+    public Content findContentById(UUID id) {
+        return contentRepository.findById(id)
+                .orElseThrow(
+                        () -> new EntityNotFoundException(
+                                String.format("Content with id: %s not found", id),
+                                ErrorCode.CONTENT_NOT_FOUND
+                        )
+                );
     }
 
 }

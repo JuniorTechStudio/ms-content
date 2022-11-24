@@ -39,4 +39,5 @@ public class ContentController {
     public void sendMessege(@PathVariable String text){
         telegramAdapterClient.sendMessage(text);
     }
+
 }

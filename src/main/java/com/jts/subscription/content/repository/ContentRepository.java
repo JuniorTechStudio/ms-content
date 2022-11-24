@@ -8,5 +8,6 @@ import java.util.UUID;
 
 public interface ContentRepository extends JpaRepository<Content, UUID> {
 
-    Optional<Content> findContentBySubscriptionTitleAndOrder(String subscriptionTitle, Integer Order);
+    Optional<Content> findContentBySubscriptionTitleAndOrder(String subscriptionTitle, Integer order);
+
 }
