@@ -2,11 +2,11 @@ spring:
   application:
     name: demo-application
   datasource:
-    url: jdbc:postgresql://localhost:5432/test
-    username: test
-    password: test
+    url: jdbc:postgresql://192.168.88.13:5432/project_subscription
+    username: postgres
+    password: postgres
     driver-class-name: org.postgresql.Driver
   liquibase:
-    default-schema: public
+    default-schema: content
 server:
   port: 8084
