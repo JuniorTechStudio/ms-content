@@ -9,15 +9,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/subscription")
 @RequiredArgsConstructor
+@RequestMapping("/subscription")
 public class SubscriptionController {
 
     private final SubscriptionFacade subscriptionFacade;
 
-    @PostMapping
-    public void prepareContent(@RequestBody PrepareAndSendContentRequest prepareAndSendContentRequest) {
-        subscriptionFacade.prepareAndSendContent(prepareAndSendContentRequest);
+    @PostMapping("/send")
+    public void prepareAndSendContent(@RequestBody PrepareAndSendContentRequest request) {
+        subscriptionFacade.prepareAndSendContent(request);
     }
 
 }
+

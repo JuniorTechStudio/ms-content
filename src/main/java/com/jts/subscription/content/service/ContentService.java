@@ -45,4 +45,14 @@ public class ContentService {
                 );
     }
 
+    public Content findContentBySubscriptionTitleAndOrder(String subscriptionTitle, Integer order) {
+        return contentRepository.findContentBySubscriptionTitleAndOrder(subscriptionTitle, order)
+                .orElseThrow(
+                        () -> new EntityNotFoundException(
+                                String.format("Content with subscription title: %s and order number: %d not found", subscriptionTitle, order),
+                                ErrorCode.CONTENT_BY_SUBSCRIPTION_AND_ORDER_NOT_FOUND
+                        )
+                );
+    }
+
 }

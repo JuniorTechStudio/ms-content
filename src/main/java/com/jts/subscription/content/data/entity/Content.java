@@ -34,4 +34,5 @@ public class Content {
 
     @Column(name = "order_number")
     private Integer order;
+
 }

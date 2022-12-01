@@ -9,12 +9,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/content")
 @RequiredArgsConstructor
+@RequestMapping("/content")
 public class ContentController {
 
     private final ContentService contentService;
-    private final TelegramAdapterClient telegramAdapterClient;
 
     @GetMapping("/{text}")
     public void getContent(@PathVariable String text) {
@@ -35,9 +34,5 @@ public class ContentController {
         return contentService.updateContent(content);
     }
 
-    @PostMapping("/send/{text}")
-    public void sendMessege(@PathVariable String text){
-        telegramAdapterClient.sendMessage(text);
-    }
 
 }
