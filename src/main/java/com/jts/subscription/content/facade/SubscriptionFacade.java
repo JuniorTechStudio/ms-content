@@ -4,7 +4,9 @@ import com.jts.subscription.content.client.TelegramAdapterClient;
 import com.jts.subscription.content.data.dto.PrepareAndSendContentRequest;
 import com.jts.subscription.content.service.SubscriptionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@Service
 @RequiredArgsConstructor
 public class SubscriptionFacade {
 
