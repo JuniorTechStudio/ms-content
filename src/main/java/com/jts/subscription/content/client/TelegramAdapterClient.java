@@ -4,7 +4,7 @@ import com.jts.subscription.content.data.dto.TelegramSendContentRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(name = "ms-telegram-adapter", url = "http://localhost:8080/")
+@FeignClient(name = "ms-telegram-adapter", url = "${feign.telegram.url}")
 public interface TelegramAdapterClient {
 
    @PostMapping("telegram/send")

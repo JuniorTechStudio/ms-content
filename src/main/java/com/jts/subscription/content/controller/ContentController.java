@@ -1,6 +1,5 @@
 package com.jts.subscription.content.controller;
 
-import com.jts.subscription.content.client.TelegramAdapterClient;
 import com.jts.subscription.content.data.entity.Content;
 import com.jts.subscription.content.service.ContentService;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +32,5 @@ public class ContentController {
     public Content updateContent(@RequestBody Content content) {
         return contentService.updateContent(content);
     }
-
 
 }
