@@ -12,5 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TelegramSendContentRequest {
+
     private List<PreparedSubscriptionContent> preparedSubscriptionContentList;
+
 }

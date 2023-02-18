@@ -7,6 +7,8 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PreparedSubscriptionContent {
+
     private String telegramId;
     private String content;
+
 }
