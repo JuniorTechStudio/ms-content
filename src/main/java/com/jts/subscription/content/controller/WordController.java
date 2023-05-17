@@ -10,15 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/subscription")
-public class SubscriptionController {
+@RequestMapping("/word")
+public class WordController {
 
     private final SubscriptionFacade subscriptionFacade;
 
-    @PostMapping("/send")
-    public void prepareAndSendContent(@RequestBody PrepareAndSendContentRequest request) {
-        subscriptionFacade.prepareAndSendContentBySubscriptionTitleAndOrder(request);
+    @PostMapping("/send/random")
+    public void updateContent(@RequestBody PrepareAndSendContentRequest request) {
+        subscriptionFacade.prepareAndSendRandomWordByUserInfo(request);
     }
 
 }
-
