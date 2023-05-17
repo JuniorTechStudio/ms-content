@@ -1,5 +1,5 @@
 --liquibase formatted sql
---changeset BichikArtem
+--changeset BichikArtem:5
 
 CREATE TABLE IF NOT EXISTS content.word
 (
