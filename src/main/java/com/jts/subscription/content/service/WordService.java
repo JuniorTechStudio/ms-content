@@ -1,7 +1,5 @@
 package com.jts.subscription.content.service;
 
-
-import com.jts.subscription.content.client.TelegramAdapterClient;
 import com.jts.subscription.content.data.dto.PrepareAndSendContentRequest;
 import com.jts.subscription.content.data.dto.PreparedSubscriptionContent;
 import com.jts.subscription.content.data.dto.TelegramSendContentRequest;
@@ -20,7 +18,16 @@ import java.util.stream.Collectors;
 public class WordService {
 
     private final WordRepository wordRepository;
-    private final TelegramAdapterClient telegramAdapterClient;
+
+    public TelegramSendContentRequest prepareRandomWordByUserInfo(PrepareAndSendContentRequest request) {
+        var randomWord = wordRepository.getRandomWord();
+        var content = randomWord.getEnValue() + " - " + randomWord.getRuValue();
+        var preparedSubscriptionContentList = request.getSubscriptionUserInfoDTOList()
+                .stream()
+                .map(userInfo -> new PreparedSubscriptionContent(userInfo.getTelegramId(), content))
+                .collect(Collectors.toList());
+        return new TelegramSendContentRequest(preparedSubscriptionContentList);
+    }
 
     public Word findWordById(UUID id) {
         return wordRepository.findById(id)
@@ -28,17 +35,6 @@ public class WordService {
                         String.format("Word with id: %s not found", id),
                         ErrorCode.CONTENT_NOT_FOUND
                 ));
-    }
-
-    public TelegramSendContentRequest prepareRandomWordByUserInfo(PrepareAndSendContentRequest request) {
-//        var randomWord = wordRepository.getRandomWord();
-        var randomWord = new Word(null, "test", "test");
-        var content = randomWord.getEnValue() + " - " + randomWord.getRuValue();
-        var preparedSubscriptionContentList = request.getSubscriptionUserInfoDTOList()
-                .stream()
-                .map(userInfo -> new PreparedSubscriptionContent(userInfo.getTelegramId(), content))
-                .collect(Collectors.toList());
-        return new TelegramSendContentRequest(preparedSubscriptionContentList);
     }
 
 }
