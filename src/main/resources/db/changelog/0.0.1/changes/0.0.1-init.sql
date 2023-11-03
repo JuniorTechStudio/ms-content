@@ -1,6 +1,8 @@
 --liquibase formatted sql
 
 --changeset BichikArtem:1
+CREATE SCHEMA IF NOT EXISTS content;
+
 CREATE TABLE IF NOT EXISTS content.text
 (
     id uuid constraint text_pkey primary key,
