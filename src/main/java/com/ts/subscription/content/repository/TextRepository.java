@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public interface TextRepository extends JpaRepository<Text, UUID> {
 
-    Optional<Text> findBySubscriptionIdAndOrderNumber(UUID subscriptionId, Integer orderNumber);
+    Optional<Text> findBySubscriptionIdAndOrderNumber(UUID subscriptionId, int orderNumber);
 
     List<Text> findAllBySubscriptionId(UUID subscriptionId);
 

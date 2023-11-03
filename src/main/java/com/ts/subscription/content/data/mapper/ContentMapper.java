@@ -13,6 +13,7 @@ import java.util.UUID;
 @Mapper(componentModel = "spring")
 public interface ContentMapper {
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "content", source = "request.content")
     @Mapping(target = "subscriptionId", source = "subscriptionId")
     @Mapping(target = "subscriptionTitle", source = "request.subscriptionTitle")

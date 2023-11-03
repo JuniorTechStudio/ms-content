@@ -24,10 +24,10 @@ public class ContentController {
         return ResponseEntity.ok(allContentBySubscription);
     }
 
-    @GetMapping("/{subscriptionId}/contents")
+    @GetMapping(path = "/{subscriptionId}/contents", params = "orderNumber")
     public ResponseEntity<ContentValue> getContentByOrderNumber(
             @PathVariable UUID subscriptionId,
-            @RequestParam("orderNumber") Integer orderNumber
+            @RequestParam Integer orderNumber
     ) {
         var contentValue = textService.getContentByOrderNumber(subscriptionId, orderNumber);
         return ResponseEntity.ok(contentValue);

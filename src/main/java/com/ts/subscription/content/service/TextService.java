@@ -28,16 +28,16 @@ public class TextService {
         return contentMapper.toContentCreateResponse(savedContent);
     }
 
-    public void deleteContent(UUID id) {
-        textRepository.deleteById(id);
-    }
+//    public void deleteContent(UUID id) {
+//        textRepository.deleteById(id);
+//    }
 
-    @Transactional
-    public Text updateContent(Text text) {
-        Text tempText = findTextById(text.getId());
-        tempText.setContent(text.getContent());
-        return tempText;
-    }
+//    @Transactional
+//    public Text updateContent(Text text) {
+//        Text tempText = findTextById(text.getId());
+//        tempText.setContent(text.getContent());
+//        return tempText;
+//    }
 
     public Text findTextById(UUID id) {
         return textRepository.findById(id)
@@ -47,7 +47,7 @@ public class TextService {
                 ));
     }
 
-    public ContentValue getContentByOrderNumber(UUID subscriptionId, Integer orderNumber) {
+    public ContentValue getContentByOrderNumber(UUID subscriptionId, int orderNumber) {
         Text text = textRepository.findBySubscriptionIdAndOrderNumber(subscriptionId, orderNumber)
                 .orElseThrow(() -> new EntityNotFoundException(
                         String.format("Text with subscription title: %s and order number: %d not found", subscriptionId, orderNumber),

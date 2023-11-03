@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS content.text
 (
     id uuid constraint text_pkey primary key,
     content varchar(255),
-    subscription_id int not null,
+    subscription_id uuid not null,
     subscription_title varchar not null,
     order_number int not null
 );
